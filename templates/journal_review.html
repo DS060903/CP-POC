@@ -162,14 +162,11 @@
                     
                     {% if entry.is_anomaly %}
                     <div class="status-flag status-anomaly">
-                        <span class="status-icon">⚠️</span>
-                        <span class="status-text">Anomaly Detected</span>
-                        <span class="status-reason">{{ entry.anomaly_reason }}</span>
+                        <span class="status-text">Anomaly: {{ entry.anomaly_reason }}</span>
                     </div>
                     {% else %}
                     <div class="status-flag status-normal">
-                        <span class="status-icon">✓</span>
-                        <span class="status-text">Normal Transaction</span>
+                        <span class="status-text">Normal</span>
                     </div>
                     {% endif %}
                 </div>

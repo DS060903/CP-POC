@@ -72,17 +72,13 @@
             <div class="sidebar-user">
                 <div class="user-card">
                     <div class="user-avatar">
-                        {% if session.get('persona_role') == 'Controller' %}👩‍💼{% else %}👨‍💻{% endif %}
+                        {{ session.get('persona_name', 'U')[0] }}
                     </div>
                     <div class="user-info">
                         <div class="user-name">{{ session.get('persona_name') }}</div>
                         <div class="user-role">{{ session.get('persona_role') }}</div>
                         <div class="user-role-badge">
-                            {% if session.get('persona_role') == 'Controller' %}
-                            <span>●</span> Full Access
-                            {% else %}
-                            <span>●</span> Plant View
-                            {% endif %}
+                            {% if session.get('persona_role') == 'Controller' %}Full Access{% else %}Filtered{% endif %}
                         </div>
                     </div>
                 </div>

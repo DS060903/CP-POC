@@ -20,28 +20,24 @@
         
         <div class="login-features">
             <div class="login-feature">
-                <div class="login-feature-icon">📊</div>
                 <div class="login-feature-text">
                     <h4>Multi-ERP Integration</h4>
                     <p>Unified view across SAP, JDE, and iSeries</p>
                 </div>
             </div>
             <div class="login-feature">
-                <div class="login-feature-icon">🤖</div>
                 <div class="login-feature-text">
                     <h4>AI Classification</h4>
                     <p>ML-powered GL mapping with 89% precision</p>
                 </div>
             </div>
             <div class="login-feature">
-                <div class="login-feature-icon">⚠️</div>
                 <div class="login-feature-text">
                     <h4>Anomaly Detection</h4>
                     <p>Isolation Forest flags high-risk transactions</p>
                 </div>
             </div>
             <div class="login-feature">
-                <div class="login-feature-icon">🔒</div>
                 <div class="login-feature-text">
                     <h4>Role-Based Access</h4>
                     <p>Secure, persona-specific data filtering</p>
@@ -63,9 +59,7 @@
                     <input type="hidden" name="persona" value="{{ key }}">
                     
                     <div class="persona-header">
-                        <div class="persona-avatar">
-                            {% if persona.role == 'Controller' %}👩‍💼{% else %}👨‍💻{% endif %}
-                        </div>
+                        <div class="persona-avatar">{{ persona.name[0] }}</div>
                         <div class="persona-info">
                             <h3>{{ persona.name }}</h3>
                             <div class="persona-role">{{ persona.role }}</div>

@@ -435,7 +435,9 @@ def api_journal_entries():
 @app.errorhandler(404)
 def not_found(e):
     """Handle 404 errors."""
-    flash('Page not found.', 'error')
+    # Don't flash for static asset requests (favicon, etc.)
+    if not request.path.startswith('/static') and request.path != '/favicon.ico':
+        flash('Page not found.', 'error')
     return redirect(url_for('index'))
 
 

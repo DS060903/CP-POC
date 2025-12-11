@@ -20,7 +20,7 @@
                 <span class="table-badge table-badge-erp">{{ entry.source_erp }}</span>
                 <span style="font-weight: 600; font-family: var(--font-mono);">{{ entry.amount }}</span>
                 {% if entry.is_anomaly %}
-                <span class="table-badge table-badge-danger">⚠️ Anomaly</span>
+                <span class="table-badge table-badge-danger">Anomaly</span>
                 {% endif %}
             </div>
         </div>
@@ -91,7 +91,7 @@
                 
                 {% if erp_detail.risk_flags %}
                 <div class="risk-flags">
-                    <strong style="font-size: var(--text-sm); color: var(--gray-700); display: block; margin-bottom: var(--space-2);">🚨 Risk Flags</strong>
+                    <strong style="font-size: var(--text-sm); color: var(--gray-700); display: block; margin-bottom: var(--space-2);">Risk Flags</strong>
                     {% for flag in erp_detail.risk_flags %}
                     <span class="risk-flag">{{ flag }}</span>
                     {% endfor %}
@@ -99,7 +99,6 @@
                 {% endif %}
                 {% else %}
                 <div class="empty-state" style="padding: var(--space-6);">
-                    <div class="empty-state-icon" style="width: 60px; height: 60px; font-size: var(--text-xl);">📁</div>
                     <div class="empty-state-title" style="font-size: var(--text-base);">ERP Detail Not Available</div>
                     <div class="empty-state-desc">Detailed ERP record data not available for this entry.</div>
                 </div>
@@ -121,7 +120,7 @@
             <div class="detail-card-body">
                 {% if mapping_explanation %}
                 <div style="margin-bottom: var(--space-5);">
-                    <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-3);">🔑 Detected Keywords</h4>
+                    <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-3);">Detected Keywords</h4>
                     <div class="keyword-tags">
                         {% for keyword in mapping_explanation.detected_keywords %}
                         <span class="keyword-tag">{{ keyword }}</span>
@@ -130,7 +129,7 @@
                 </div>
                 
                 <div style="margin-bottom: var(--space-5);">
-                    <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-3);">📊 Category Scores</h4>
+                    <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-3);">Category Scores</h4>
                     <div class="score-bars">
                         {% for category, score in mapping_explanation.keyword_category_scores.items() %}
                         <div class="score-bar">
@@ -145,7 +144,7 @@
                 </div>
                 
                 <div style="margin-bottom: var(--space-5);">
-                    <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-3);">🏢 Vendor Analysis</h4>
+                    <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-3);">Vendor Analysis</h4>
                     <dl class="detail-list" style="gap: var(--space-2) var(--space-4);">
                         <dt>Category Hint</dt>
                         <dd>{{ mapping_explanation.vendor_analysis.category_hint|replace('_', ' ')|title }}</dd>
@@ -160,7 +159,7 @@
                 
                 {% if mapping_explanation.legacy_account_lookup %}
                 <div>
-                    <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-3);">📖 Legacy Account Lookup</h4>
+                    <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-3);">Legacy Account Lookup</h4>
                     <dl class="detail-list" style="gap: var(--space-2) var(--space-4);">
                         <dt>TMHNA Account</dt>
                         <dd><code>{{ mapping_explanation.legacy_account_lookup.tmhna_account_code }}</code></dd>
@@ -205,24 +204,21 @@
                 <div class="metric-box {% if entry.is_anomaly %}metric-danger{% else %}metric-success{% endif %}">
                     <div class="metric-box-label">Anomaly Status</div>
                     <div class="metric-box-value">
-                        {% if entry.is_anomaly %}⚠️ Flagged{% else %}✓ Normal{% endif %}
+                        {% if entry.is_anomaly %}Flagged{% else %}Normal{% endif %}
                     </div>
                     <div class="metric-box-sublabel">Score: {{ "%.2f"|format(entry.anomaly_score) }}</div>
                 </div>
             </div>
             
             {% if entry.is_anomaly %}
-            <div class="alert-card alert-warning" style="margin-bottom: var(--space-6);">
-                <div class="alert-icon">⚠️</div>
-                <div class="alert-content">
-                    <div class="alert-title">Anomaly Detected - {{ entry.anomaly_severity }} Severity</div>
-                    <div class="alert-message">{{ entry.anomaly_reason }}</div>
-                </div>
+            <div class="alert-box alert-warning" style="margin-bottom: 24px;">
+                <strong>Anomaly Detected ({{ entry.anomaly_severity }} Severity)</strong>
+                <p>{{ entry.anomaly_reason }}</p>
             </div>
             {% endif %}
             
             <div style="margin-bottom: var(--space-6);">
-                <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-4);">🎯 Top 3 Classification Candidates</h4>
+                <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-4);">Top 3 Classification Candidates</h4>
                 <div class="candidates-grid">
                     {% for suggestion in entry.top_3 %}
                     <div class="candidate-card {% if loop.first %}selected{% endif %}">
@@ -236,7 +232,7 @@
             
             {% if mapping_explanation and mapping_explanation.confidence_factors %}
             <div>
-                <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-4);">📈 Confidence Factors</h4>
+                <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-4);">Confidence Factors</h4>
                 <div class="factors-list">
                     {% for factor in mapping_explanation.confidence_factors %}
                     <div class="factor-item factor-{{ factor.impact|lower }}">
