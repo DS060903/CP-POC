@@ -346,6 +346,30 @@ img {
     background: rgba(255, 255, 255, 0.2);
 }
 
+.nav-badge-danger {
+    background: var(--error-600);
+    animation: pulse-danger 2s infinite;
+}
+
+@keyframes pulse-danger {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Anomaly Count Badge in Page Header */
+.anomaly-count-badge {
+    display: inline-flex;
+    align-items: center;
+    background: var(--error-100);
+    color: var(--error-700);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    margin-left: var(--space-3);
+    vertical-align: middle;
+}
+
 /* Sidebar User Section */
 .sidebar-user {
     padding: var(--space-4);
