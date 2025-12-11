@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
-{% block title %}{% if anomalies_only %}Anomalies{% else %}Journal Review{% endif %} - TMHNA Financial Intelligence Portal{% endblock %}
-{% block breadcrumb %}{% if anomalies_only %}Anomalies{% else %}Journal Review{% endif %}{% endblock %}
+{% block title %}Journal Review - TMHNA Financial Intelligence Portal{% endblock %}
+{% block breadcrumb %}Journal Review{% endblock %}
 
 {% block content %}
 <div class="journal-review">
@@ -9,20 +9,10 @@
     <div class="page-header">
         <div class="page-header-content">
             <div class="page-header-left">
-                {% if anomalies_only %}
-                <h1>
-                    <span style="color: var(--danger);">⚠️</span> Anomaly Review
-                    <span class="anomaly-count-badge">{{ entries|length }} flagged</span>
-                </h1>
-                <p class="page-subtitle">
-                    Review flagged transactions requiring manual investigation and approval
-                </p>
-                {% else %}
                 <h1>Journal Entry Review</h1>
                 <p class="page-subtitle">
                     Review and validate AI-classified journal entries with ML-generated confidence scores
                 </p>
-                {% endif %}
             </div>
             <div class="page-header-actions">
                 <button class="btn btn-secondary">

@@ -61,7 +61,7 @@ and the confidence score distribution from our AI classifier."
 [0:25 - 0:40] ANOMALY INVESTIGATION (15 seconds)
 ------------------------------------------------------------------------------
 
-ACTION: Scroll to the High-Risk Anomalies table
+ACTION: Scroll to the High-Risk Anomalies table on Dashboard
 
 NARRATOR: "The system automatically flags high-risk transactions. Let's 
 investigate this $50,000 McKinsey consulting entry."
@@ -73,6 +73,9 @@ the AI's mapping explanation, and why it was flagged - high-value
 consulting engagement requiring executive approval."
 
 ACTION: Point to the Risk Flags (High Value, Consulting Category)
+
+ALTERNATIVE: You can also filter for anomalies on the Journal Review page
+using the "Anomalies Only" checkbox filter.
 
 ------------------------------------------------------------------------------
 [0:40 - 0:55] ROLE-BASED FILTERING (15 seconds)
