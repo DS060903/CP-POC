@@ -1,0 +1,209 @@
+================================================================================
+TMHNA FINANCIAL INTELLIGENCE PORTAL
+60-SECOND DEMO RUNBOOK
+================================================================================
+
+Document Version: 1.0
+Last Updated: December 2024
+Total Demo Time: ~60 seconds
+
+================================================================================
+PRE-DEMO CHECKLIST
+================================================================================
+
+Before starting the demo:
+
+  □ Application running at http://localhost:5000
+  □ Browser open and ready
+  □ Start from logout state (clean session)
+  □ Screen sharing enabled (if presenting remotely)
+
+Quick Start Command:
+  cd tmhna_financial_poc
+  python run.py
+
+================================================================================
+DEMO SCRIPT (60 SECONDS)
+================================================================================
+
+------------------------------------------------------------------------------
+[0:00 - 0:10] INTRODUCTION & LOGIN (10 seconds)
+------------------------------------------------------------------------------
+
+NARRATOR: "This is the TMHNA Financial Intelligence Portal - a unified 
+platform for managing financial data across our multiple ERP systems."
+
+ACTION: On the Login page, point to the two persona cards
+
+NARRATOR: "We have role-based access. Let me show you the Controller view 
+first - this is Maria, who has full access to all entities."
+
+ACTION: Click "Continue as Maria"
+
+------------------------------------------------------------------------------
+[0:10 - 0:25] DASHBOARD OVERVIEW (15 seconds)
+------------------------------------------------------------------------------
+
+NARRATOR: "The dashboard gives Maria an instant snapshot of financial data 
+health across all TMHNA entities."
+
+ACTION: Point to each KPI card as you mention it
+
+NARRATOR: "She sees 10 total journal entries, 5 anomalies flagged by our 
+ML model, and an average classification confidence of 56%."
+
+ACTION: Scroll to the charts
+
+NARRATOR: "These charts show the distribution of entries by GL account 
+and the confidence score distribution from our AI classifier."
+
+------------------------------------------------------------------------------
+[0:25 - 0:40] ANOMALY INVESTIGATION (15 seconds)
+------------------------------------------------------------------------------
+
+ACTION: Scroll to the High-Risk Anomalies table
+
+NARRATOR: "The system automatically flags high-risk transactions. Let's 
+investigate this $50,000 McKinsey consulting entry."
+
+ACTION: Click "Investigate" on JE008
+
+NARRATOR: "The drill-down shows the raw ERP record from JD Edwards, 
+the AI's mapping explanation, and why it was flagged - high-value 
+consulting engagement requiring executive approval."
+
+ACTION: Point to the Risk Flags (High Value, Consulting Category)
+
+------------------------------------------------------------------------------
+[0:40 - 0:55] ROLE-BASED FILTERING (15 seconds)
+------------------------------------------------------------------------------
+
+ACTION: Click "Sign Out" in sidebar, then click "Continue as Daniel"
+
+NARRATOR: "Now let's see Daniel's view - he's a Plant Analyst at Raymond 
+who only has access to his facility's data."
+
+ACTION: On Dashboard, point to the reduced metrics
+
+NARRATOR: "Notice Daniel only sees 4 entries - the system automatically 
+filters to show only Raymond facility transactions. This ensures data 
+segregation and compliance with our access policies."
+
+------------------------------------------------------------------------------
+[0:55 - 1:00] CLOSING (5 seconds)
+------------------------------------------------------------------------------
+
+ACTION: Point to the sidebar navigation
+
+NARRATOR: "The portal provides unified reporting, AI-powered classification, 
+anomaly detection, and role-based access - all in one platform. 
+Questions?"
+
+================================================================================
+KEY DEMO TALKING POINTS
+================================================================================
+
+If asked, be prepared to discuss:
+
+1. DATA INTEGRATION
+   "We ingest data from SAP, JDE, and iSeries systems, normalizing it 
+   into a unified schema for consistent analysis."
+
+2. AI/ML CAPABILITIES
+   "Our Random Forest classifier automatically maps legacy GL codes to 
+   the TMHNA unified Chart of Accounts with 89% precision."
+
+3. ANOMALY DETECTION
+   "The Isolation Forest model identifies statistical outliers, while 
+   rule-based checks flag high-value transactions and ambiguous descriptions."
+
+4. ROLE-BASED ACCESS
+   "Controllers see everything; plant analysts see only their facility. 
+   This ensures compliance with SOX and data governance requirements."
+
+5. HUMAN-IN-THE-LOOP
+   "The feedback form allows users to correct classifications, which 
+   feeds back into model retraining for continuous improvement."
+
+================================================================================
+ALTERNATE DEMO PATHS
+================================================================================
+
+IF YOU HAVE MORE TIME (2-3 minutes):
+--------------------------------------
+
+Add these steps after the main demo:
+
+1. Journal Review Page (30 seconds)
+   - Show filtering by ERP source
+   - Adjust confidence slider
+   - Toggle "Anomalies Only"
+   - Click into an entry card
+
+2. Model Performance Page (30 seconds)
+   - Show classification model metrics (89% precision)
+   - Show anomaly detection capabilities
+   - Discuss the improvement roadmap
+
+3. Drill-Down Deep Dive (30 seconds)
+   - Show the mapping explanation
+   - Point out detected keywords
+   - Highlight category scores
+   - Demonstrate feedback submission
+
+IF AUDIENCE IS TECHNICAL:
+-------------------------
+
+Emphasize:
+  - TF-IDF vectorization for text features
+  - Random Forest with 100 estimators
+  - Isolation Forest with 5% contamination rate
+  - Auto-training on startup if models don't exist
+  - Pickle-based model persistence
+
+IF AUDIENCE IS EXECUTIVE:
+-------------------------
+
+Emphasize:
+  - ROI: Reduced manual classification time
+  - Risk: Automated anomaly detection
+  - Compliance: Role-based access controls
+  - Scalability: Multi-ERP integration framework
+  - Governance: Human-in-the-loop validation
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+ISSUE: Application won't start
+SOLUTION: 
+  cd tmhna_financial_poc
+  pip install -r requirements.txt
+  python run.py
+
+ISSUE: Models not loading
+SOLUTION: Delete models/*.pkl files and restart - they'll auto-regenerate
+
+ISSUE: Charts not rendering
+SOLUTION: Ensure Plotly CDN is accessible (check internet connection)
+
+ISSUE: Login redirects unexpectedly
+SOLUTION: Clear browser cookies/cache and restart
+
+================================================================================
+POST-DEMO FOLLOW-UP
+================================================================================
+
+After the demo, be prepared to share:
+
+  1. This demo runbook
+  2. privilege.txt (access control documentation)
+  3. rationale.txt (business value documentation)
+  4. README.md (technical setup guide)
+
+Repository location: tmhna_financial_poc/
+
+================================================================================
+END OF RUNBOOK
+================================================================================
+

@@ -1,0 +1,12 @@
+entry_id,source_erp,source_company_code,local_account_code,local_cost_center,vendor_name,description,amount_local_currency,currency_code,posting_date,created_by,business_context
+JE001,SAP_ECC,TN01,500020,CC1001,Grainger Industrial Supply,Direct Materials - Steel Components Q4 Procurement,45230.50,USD,2024-10-15,jsmith,Manufacturing materials for forklift assembly line
+JE002,JDE,RY01,50010,CC2001,Fastenal Company,Raw Materials - Fasteners and Hardware,12875.00,USD,2024-10-18,mwilliams,Production materials for reach truck components
+JE003,ISERIES,TN02,620010,CC1002,TravelPerk Business Travel,T&E - Sales Team Quarterly Conference,8450.00,USD,2024-10-20,agarcia,Q4 sales kickoff travel expenses
+JE004,SAP_ECC,TN01,510030,CC1001,ADP Payroll Services,Direct Labor - Assembly Line Workers October,67500.00,USD,2024-10-31,hrpayroll,Monthly payroll for production staff
+JE005,JDE,RY01,64020,CC2002,Duke Energy Corporation,Utilities - Plant Electricity October,15230.00,USD,2024-11-01,facilitymgr,Monthly electricity bill Greene facility
+JE006,SAP_ECC,TN01,500020,CC1003,Caterpillar Parts Inc,Misk Exp - Oct,3250.00,USD,2024-11-05,jdoe,Miscellaneous parts order
+JE007,ISERIES,TN02,70010,CC3001,ABC Manufacturing Corp,Product Sales - Forklift Model FX500,125000.00,USD,2024-11-08,salesteam,Q4 equipment sale to major distributor
+JE008,JDE,RY01,62500,CC2001,McKinsey & Company,Strategic Consulting - Process Optimization,50000.00,USD,2024-11-10,cfo_office,High-value consulting engagement for operations review
+JE009,SAP_ECC,TN01,52010,CC1001,FedEx Freight Services,Freight - Inbound Materials Shipping,4875.00,USD,2024-11-12,logistics,Shipping costs for steel component delivery
+JE010,JDE,RY01,63010,CC2003,Grainger Industrial Supply,Maintenance - Equipment Repair Parts,2340.00,USD,2024-11-15,maintenance,Replacement parts for conveyor system
+

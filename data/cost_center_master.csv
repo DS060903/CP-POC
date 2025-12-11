@@ -1,0 +1,10 @@
+tmhna_cost_center_code,tmhna_cost_center_name,brand,location,function
+CC1001,Columbus Manufacturing,Toyota Material Handling,Columbus IN,Production
+CC1002,Columbus Sales,Toyota Material Handling,Columbus IN,Sales
+CC1003,Muscatine Manufacturing,Toyota Material Handling,Muscatine IA,Production
+CC2001,Greene Manufacturing,Raymond,Greene NY,Production
+CC2002,Greene Facilities,Raymond,Greene NY,Facilities
+CC2003,Greene Maintenance,Raymond,Greene NY,Maintenance
+CC3001,Corporate Sales,TMHNA Corporate,Dallas TX,Sales
+CC3002,Corporate Finance,TMHNA Corporate,Dallas TX,Finance
+

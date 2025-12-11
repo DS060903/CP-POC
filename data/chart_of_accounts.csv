@@ -1,0 +1,12 @@
+tmhna_account_code,tmhna_account_name,account_category,source_account_tmh_sap,source_account_raymond_jde,description
+5000,Direct Materials,COGS,500020,50010,Raw materials and components for production
+5100,Direct Labor,COGS,510030,51010,Manufacturing labor costs
+5200,Freight Inbound,COGS,52010,52010,Shipping costs for inbound materials
+6000,Travel & Entertainment,SG&A,620010,62010,Business travel and entertainment expenses
+6100,Utilities,SG&A,64020,64020,Plant utilities including electricity gas water
+6200,Consulting Services,SG&A,62500,62500,Professional consulting and advisory services
+6300,Maintenance & Repairs,SG&A,63010,63010,Equipment maintenance and repair costs
+6400,Office Supplies,SG&A,64010,64010,General office supplies and materials
+7000,Product Revenue,Revenue,70010,70010,Revenue from product sales
+7100,Service Revenue,Revenue,71010,71010,Revenue from service contracts
+

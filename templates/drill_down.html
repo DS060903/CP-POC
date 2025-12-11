@@ -1,0 +1,283 @@
+{% extends "base.html" %}
+
+{% block title %}Entry {{ entry.entry_id }} - Drill-Down Analysis{% endblock %}
+{% block breadcrumb %}Drill-Down: {{ entry.entry_id }}{% endblock %}
+
+{% block content %}
+<div class="drill-down">
+    <!-- Page Header with Back Navigation -->
+    <div class="drill-down-header">
+        <a href="{{ url_for('journal_review') }}" class="btn btn-secondary btn-icon drill-down-back" title="Back to Journal Review">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+        </a>
+        <div class="page-header" style="margin-bottom: 0;">
+            <h1>Drill-Down Analysis</h1>
+            <div class="drill-down-meta">
+                <code style="font-size: var(--text-lg);">{{ entry.entry_id }}</code>
+                <span class="table-badge table-badge-erp">{{ entry.source_erp }}</span>
+                <span style="font-weight: 600; font-family: var(--font-mono);">{{ entry.amount }}</span>
+                {% if entry.is_anomaly %}
+                <span class="table-badge table-badge-danger">⚠️ Anomaly</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- ERP Detail + Mapping Explanation Grid -->
+    <div class="drill-down-grid">
+        <div class="detail-card">
+            <div class="detail-card-header">
+                <div class="detail-card-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                    </svg>
+                    ERP System Details
+                </div>
+            </div>
+            <div class="detail-card-body">
+                {% if erp_detail %}
+                <dl class="detail-list">
+                    <dt>ERP System</dt>
+                    <dd>{{ erp_detail.erp_system }}</dd>
+                    
+                    <dt>Document Number</dt>
+                    <dd><code>{{ erp_detail.document_number }}</code></dd>
+                    
+                    <dt>Company Code</dt>
+                    <dd>{{ erp_detail.company_code }}</dd>
+                    
+                    <dt>Fiscal Period</dt>
+                    <dd>{{ erp_detail.fiscal_year }} / {{ erp_detail.fiscal_period }}</dd>
+                    
+                    <dt>Account</dt>
+                    <dd><code>{{ erp_detail.account }}</code></dd>
+                    
+                    <dt>Cost Center</dt>
+                    <dd>{{ erp_detail.cost_center }}</dd>
+                    
+                    <dt>Vendor</dt>
+                    <dd>{{ erp_detail.vendor }}</dd>
+                    
+                    <dt>Vendor ID</dt>
+                    <dd><code>{{ erp_detail.vendor_id }}</code></dd>
+                    
+                    <dt>Amount</dt>
+                    <dd style="font-weight: 600;">${{ "%.2f"|format(erp_detail.amount) }} {{ erp_detail.currency }}</dd>
+                    
+                    <dt>Posting Date</dt>
+                    <dd>{{ erp_detail.posting_date }}</dd>
+                    
+                    <dt>Reference</dt>
+                    <dd>{{ erp_detail.reference }}</dd>
+                    
+                    <dt>Created By</dt>
+                    <dd>{{ erp_detail.created_by }}</dd>
+                    
+                    <dt>Status</dt>
+                    <dd>
+                        <span class="table-badge {% if erp_detail.approval_status == 'Posted' %}table-badge-status{% else %}table-badge-warning{% endif %}">
+                            {{ erp_detail.approval_status }}
+                        </span>
+                    </dd>
+                    
+                    <dt>Workflow ID</dt>
+                    <dd><code style="font-size: var(--text-xs);">{{ erp_detail.workflow_id }}</code></dd>
+                </dl>
+                
+                {% if erp_detail.risk_flags %}
+                <div class="risk-flags">
+                    <strong style="font-size: var(--text-sm); color: var(--gray-700); display: block; margin-bottom: var(--space-2);">🚨 Risk Flags</strong>
+                    {% for flag in erp_detail.risk_flags %}
+                    <span class="risk-flag">{{ flag }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% else %}
+                <div class="empty-state" style="padding: var(--space-6);">
+                    <div class="empty-state-icon" style="width: 60px; height: 60px; font-size: var(--text-xl);">📁</div>
+                    <div class="empty-state-title" style="font-size: var(--text-base);">ERP Detail Not Available</div>
+                    <div class="empty-state-desc">Detailed ERP record data not available for this entry.</div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="detail-card">
+            <div class="detail-card-header">
+                <div class="detail-card-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    Mapping Explanation
+                </div>
+            </div>
+            <div class="detail-card-body">
+                {% if mapping_explanation %}
+                <div style="margin-bottom: var(--space-5);">
+                    <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-3);">🔑 Detected Keywords</h4>
+                    <div class="keyword-tags">
+                        {% for keyword in mapping_explanation.detected_keywords %}
+                        <span class="keyword-tag">{{ keyword }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: var(--space-5);">
+                    <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-3);">📊 Category Scores</h4>
+                    <div class="score-bars">
+                        {% for category, score in mapping_explanation.keyword_category_scores.items() %}
+                        <div class="score-bar">
+                            <span class="score-label">{{ category|replace('_', ' ')|title }}</span>
+                            <div class="score-track">
+                                <div class="score-fill" style="width: {{ score * 100 }}%"></div>
+                            </div>
+                            <span class="score-value">{{ "%.0f"|format(score * 100) }}%</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: var(--space-5);">
+                    <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-3);">🏢 Vendor Analysis</h4>
+                    <dl class="detail-list" style="gap: var(--space-2) var(--space-4);">
+                        <dt>Category Hint</dt>
+                        <dd>{{ mapping_explanation.vendor_analysis.category_hint|replace('_', ' ')|title }}</dd>
+                        <dt>Confidence</dt>
+                        <dd>
+                            <span class="table-badge {% if mapping_explanation.vendor_analysis.confidence == 'high' %}table-badge-status{% else %}table-badge-erp{% endif %}">
+                                {{ mapping_explanation.vendor_analysis.confidence|title }}
+                            </span>
+                        </dd>
+                    </dl>
+                </div>
+                
+                {% if mapping_explanation.legacy_account_lookup %}
+                <div>
+                    <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-3);">📖 Legacy Account Lookup</h4>
+                    <dl class="detail-list" style="gap: var(--space-2) var(--space-4);">
+                        <dt>TMHNA Account</dt>
+                        <dd><code>{{ mapping_explanation.legacy_account_lookup.tmhna_account_code }}</code></dd>
+                        <dt>Account Name</dt>
+                        <dd>{{ mapping_explanation.legacy_account_lookup.tmhna_account_name }}</dd>
+                        <dt>Category</dt>
+                        <dd>{{ mapping_explanation.legacy_account_lookup.account_category }}</dd>
+                    </dl>
+                </div>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Classification Decision -->
+    <div class="card" style="margin-bottom: var(--space-6);">
+        <div class="card-header">
+            <div class="card-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+                AI Classification Decision
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="classification-metrics">
+                <div class="metric-box">
+                    <div class="metric-box-label">Suggested Account</div>
+                    <div class="metric-box-value"><code>{{ entry.suggested_account }}</code></div>
+                    <div class="metric-box-sublabel">{{ entry.suggested_account_name }}</div>
+                </div>
+                
+                <div class="metric-box {% if entry.confidence >= 0.85 %}metric-success{% elif entry.confidence >= 0.7 %}metric-warning{% else %}metric-danger{% endif %}">
+                    <div class="metric-box-label">Confidence</div>
+                    <div class="metric-box-value">{{ entry.confidence_pct }}</div>
+                    <div class="metric-box-sublabel">
+                        {% if entry.confidence >= 0.85 %}High Confidence{% elif entry.confidence >= 0.7 %}Medium Confidence{% else %}Review Required{% endif %}
+                    </div>
+                </div>
+                
+                <div class="metric-box {% if entry.is_anomaly %}metric-danger{% else %}metric-success{% endif %}">
+                    <div class="metric-box-label">Anomaly Status</div>
+                    <div class="metric-box-value">
+                        {% if entry.is_anomaly %}⚠️ Flagged{% else %}✓ Normal{% endif %}
+                    </div>
+                    <div class="metric-box-sublabel">Score: {{ "%.2f"|format(entry.anomaly_score) }}</div>
+                </div>
+            </div>
+            
+            {% if entry.is_anomaly %}
+            <div class="alert-card alert-warning" style="margin-bottom: var(--space-6);">
+                <div class="alert-icon">⚠️</div>
+                <div class="alert-content">
+                    <div class="alert-title">Anomaly Detected - {{ entry.anomaly_severity }} Severity</div>
+                    <div class="alert-message">{{ entry.anomaly_reason }}</div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div style="margin-bottom: var(--space-6);">
+                <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-4);">🎯 Top 3 Classification Candidates</h4>
+                <div class="candidates-grid">
+                    {% for suggestion in entry.top_3 %}
+                    <div class="candidate-card {% if loop.first %}selected{% endif %}">
+                        <div class="candidate-rank">#{{ loop.index }}</div>
+                        <div class="candidate-account">{{ suggestion.account }}</div>
+                        <div class="candidate-confidence">{{ "%.1f"|format(suggestion.confidence * 100) }}%</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            {% if mapping_explanation and mapping_explanation.confidence_factors %}
+            <div>
+                <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--gray-700); margin-bottom: var(--space-4);">📈 Confidence Factors</h4>
+                <div class="factors-list">
+                    {% for factor in mapping_explanation.confidence_factors %}
+                    <div class="factor-item factor-{{ factor.impact|lower }}">
+                        <span class="factor-name">{{ factor.factor }}</span>
+                        <span class="factor-impact">{{ factor.impact }}</span>
+                        <span class="factor-detail">{{ factor.detail }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Feedback Section -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                Feedback & Manual Override
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('submit_feedback', entry_id=entry.entry_id) }}" class="feedback-form">
+                <div class="form-group">
+                    <label for="feedback" class="form-label">Your Feedback</label>
+                    <textarea name="feedback" id="feedback" class="form-textarea" rows="4"
+                              placeholder="Provide feedback about this classification, suggest corrections, or note any issues..."></textarea>
+                    <p class="form-hint">Your feedback helps improve ML model accuracy through continuous learning.</p>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                    Submit Feedback
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

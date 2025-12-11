@@ -1,0 +1,8 @@
+description,vendor_name,local_account_code,source_erp,true_tmhna_account,is_anomaly
+Direct Materials - Steel Components for Assembly,Grainger Industrial Supply,500020,SAP_ECC,5000,FALSE
+Raw Materials - Fasteners Hardware Components,Fastenal Company,50010,JDE,5000,FALSE
+Travel Expenses - Sales Conference Q4,TravelPerk Business Travel,620010,ISERIES,6000,FALSE
+Direct Labor - Production Workers Monthly,ADP Payroll Services,510030,SAP_ECC,5100,FALSE
+Utilities - Plant Electricity Monthly Bill,Duke Energy Corporation,64020,JDE,6100,FALSE
+Strategic Consulting - High Value Engagement,McKinsey & Company,62500,JDE,6200,TRUE
+

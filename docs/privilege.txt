@@ -1,0 +1,285 @@
+================================================================================
+TMHNA FINANCIAL INTELLIGENCE PORTAL
+PERSONA PRIVILEGE & ACCESS CONTROL MATRIX
+================================================================================
+
+Document Version: 1.0
+Last Updated: December 2024
+
+================================================================================
+1. EXECUTIVE SUMMARY
+================================================================================
+
+The TMHNA Financial Intelligence Portal implements role-based access control 
+(RBAC) through persona-based authentication. This document outlines the 
+differences between the two primary personas, their access levels, available 
+features, and the business rationale behind each privilege configuration.
+
+Two personas are defined:
+  • Maria Thompson - Corporate Controller (Full Access)
+  • Daniel Reyes - Plant Analyst (Filtered Access)
+
+================================================================================
+2. PERSONA PROFILES
+================================================================================
+
+------------------------------------------------------------------------------
+PERSONA 1: MARIA THOMPSON - CONTROLLER
+------------------------------------------------------------------------------
+
+PROFILE DETAILS:
+  Name:           Maria Thompson
+  Role:           Controller
+  Organization:   TMHNA Corporate Finance
+  Location:       Corporate Headquarters
+  Reports To:     CFO
+  Access Level:   FULL ACCESS (All Entities)
+
+PRIMARY RESPONSIBILITIES:
+  • Oversee consolidated financial reporting across all TMHNA entities
+  • Ensure GL mapping accuracy and consistency across all brands
+  • Review and approve high-risk anomalies and exception cases
+  • Monitor cross-brand financial performance and variance analysis
+  • Establish financial data governance policies
+  • Sign off on period-end close activities
+
+BUSINESS CONTEXT:
+  As Corporate Controller, Maria requires visibility into ALL financial 
+  transactions across every subsidiary, brand, and facility. Her role demands 
+  a holistic view to:
+    - Prepare consolidated financial statements
+    - Identify cross-entity trends and anomalies
+    - Ensure compliance with corporate accounting policies
+    - Support executive decision-making with accurate data
+
+------------------------------------------------------------------------------
+PERSONA 2: DANIEL REYES - PLANT ANALYST
+------------------------------------------------------------------------------
+
+PROFILE DETAILS:
+  Name:           Daniel Reyes
+  Role:           Plant Analyst
+  Organization:   Raymond Corporation (Greene Facility)
+  Location:       Greene, NY
+  Reports To:     Plant Controller
+  Access Level:   FILTERED ACCESS (Raymond Entities Only)
+
+PRIMARY RESPONSIBILITIES:
+  • Analyze Raymond facility transactions and cost variances
+  • Validate local account classifications against corporate standards
+  • Investigate plant-specific anomalies and exceptions
+  • Support monthly close process for Raymond entities
+  • Prepare facility-level financial reports
+  • Coordinate with corporate finance on data quality issues
+
+BUSINESS CONTEXT:
+  As a Plant Analyst, Daniel's scope is limited to Raymond Corporation 
+  facilities. This restriction ensures:
+    - Focus on facility-specific operational data
+    - Compliance with data segregation requirements
+    - Protection of sensitive cross-brand financial information
+    - Alignment with organizational hierarchy and reporting structure
+
+================================================================================
+3. ACCESS CONTROL MATRIX
+================================================================================
+
++---------------------------+-------------------+-------------------+
+| FEATURE / DATA            | MARIA (CONTROLLER)| DANIEL (ANALYST)  |
++---------------------------+-------------------+-------------------+
+| JOURNAL ENTRIES                                                   |
++---------------------------+-------------------+-------------------+
+| SAP_ECC (TMH) Entries     | ✅ Full Access    | ❌ No Access      |
+| JDE (Raymond) Entries     | ✅ Full Access    | ✅ Full Access    |
+| iSeries (Legacy) Entries  | ✅ Full Access    | ❌ No Access      |
++---------------------------+-------------------+-------------------+
+| COMPANY CODES                                                     |
++---------------------------+-------------------+-------------------+
+| TN01 (TMH Columbus)       | ✅ Full Access    | ❌ No Access      |
+| TN02 (TMH Muscatine)      | ✅ Full Access    | ❌ No Access      |
+| RY01 (Raymond Greene)     | ✅ Full Access    | ✅ Full Access    |
+| RY02 (Raymond Other)      | ✅ Full Access    | ✅ Full Access    |
++---------------------------+-------------------+-------------------+
+| DASHBOARD METRICS                                                 |
++---------------------------+-------------------+-------------------+
+| Total Entry Count         | All Entities      | Raymond Only      |
+| Anomaly Count             | All Entities      | Raymond Only      |
+| Confidence Scores         | All Entities      | Raymond Only      |
+| High-Risk Flags           | All Entities      | Raymond Only      |
++---------------------------+-------------------+-------------------+
+| CHARTS & VISUALIZATIONS                                           |
++---------------------------+-------------------+-------------------+
+| Entries by Account        | All Entities      | Raymond Only      |
+| Confidence Distribution   | All Entities      | Raymond Only      |
+| Cross-Brand Comparison    | ✅ Available      | ❌ Not Available  |
++---------------------------+-------------------+-------------------+
+| DRILL-DOWN CAPABILITIES                                           |
++---------------------------+-------------------+-------------------+
+| SAP ERP Detail            | ✅ Full Access    | ❌ No Access      |
+| JDE ERP Detail            | ✅ Full Access    | ✅ Full Access    |
+| iSeries ERP Detail        | ✅ Full Access    | ❌ No Access      |
+| Mapping Explanations      | ✅ Full Access    | ✅ Full Access    |
++---------------------------+-------------------+-------------------+
+| ADMINISTRATIVE FUNCTIONS                                          |
++---------------------------+-------------------+-------------------+
+| Submit Feedback           | ✅ Full Access    | ✅ Full Access    |
+| View Model Performance    | ✅ Full Access    | ✅ Full Access    |
+| Export Reports            | All Entities      | Raymond Only      |
++---------------------------+-------------------+-------------------+
+
+================================================================================
+4. DATA FILTERING LOGIC
+================================================================================
+
+FILTER IMPLEMENTATION:
+
+The portal applies role-based filtering using the following logic:
+
+  Maria (Controller):
+    - access_all = True
+    - No data filtering applied
+    - Sees all 10 journal entries
+    - Dashboard shows consolidated metrics
+
+  Daniel (Plant Analyst):
+    - access_all = False
+    - plant_filter = "RY"
+    - Filter: source_company_code.contains("RY")
+    - Sees only entries where company code starts with "RY"
+    - Dashboard shows Raymond-specific metrics
+
+FILTER EXAMPLE:
+
+  Original Dataset (10 entries):
+    JE001 - TN01 (TMH)      → Maria: ✅  Daniel: ❌
+    JE002 - RY01 (Raymond)  → Maria: ✅  Daniel: ✅
+    JE003 - TN02 (TMH)      → Maria: ✅  Daniel: ❌
+    JE004 - TN01 (TMH)      → Maria: ✅  Daniel: ❌
+    JE005 - RY01 (Raymond)  → Maria: ✅  Daniel: ✅
+    JE006 - TN01 (TMH)      → Maria: ✅  Daniel: ❌
+    JE007 - TN02 (TMH)      → Maria: ✅  Daniel: ❌
+    JE008 - RY01 (Raymond)  → Maria: ✅  Daniel: ✅
+    JE009 - TN01 (TMH)      → Maria: ✅  Daniel: ❌
+    JE010 - RY01 (Raymond)  → Maria: ✅  Daniel: ✅
+
+  Result:
+    Maria sees: 10 entries (100%)
+    Daniel sees: 4 entries (40%)
+
+================================================================================
+5. RATIONALE & BUSINESS JUSTIFICATION
+================================================================================
+
+WHY ROLE-BASED ACCESS?
+----------------------
+
+1. DATA SECURITY & CONFIDENTIALITY
+   - Financial data is sensitive and must be protected
+   - Need-to-know principle limits exposure
+   - Cross-brand pricing/margin data stays confidential
+   - Reduces risk of data leakage
+
+2. REGULATORY COMPLIANCE
+   - SOX (Sarbanes-Oxley) requires access controls
+   - Segregation of duties for financial systems
+   - Audit trail of who accessed what data
+   - Compliance with internal control frameworks
+
+3. OPERATIONAL EFFICIENCY
+   - Users see only relevant data for their role
+   - Reduces information overload
+   - Faster navigation and decision-making
+   - Focused dashboards improve productivity
+
+4. ORGANIZATIONAL ALIGNMENT
+   - Access mirrors reporting structure
+   - Plant analysts focus on their facilities
+   - Corporate controllers see the full picture
+   - Clear accountability boundaries
+
+WHY THESE TWO PERSONAS?
+-----------------------
+
+Controller (Maria):
+  - Represents CORPORATE OVERSIGHT function
+  - Needs cross-entity visibility for consolidation
+  - Responsible for enterprise-wide data quality
+  - Final approval authority for exceptions
+  - Typical user: CFO staff, Corporate Accounting, Internal Audit
+
+Plant Analyst (Daniel):
+  - Represents OPERATIONAL SUPPORT function
+  - Deep knowledge of local business context
+  - First line of defense for data quality
+  - Investigates facility-specific issues
+  - Typical user: Plant Accountants, Cost Analysts, Local Finance
+
+Together, they demonstrate the two extremes of the access spectrum, making 
+the role-based filtering capabilities clearly visible during demos.
+
+================================================================================
+6. FUTURE ENHANCEMENTS
+================================================================================
+
+PLANNED PERSONA ADDITIONS:
+
+1. REGIONAL CONTROLLER
+   - Access: Multiple facilities within a brand
+   - Use Case: Raymond Americas Controller (all RY codes)
+
+2. BRAND CFO
+   - Access: Single brand, all entities
+   - Use Case: Toyota Material Handling CFO (all TN codes)
+
+3. INTERNAL AUDITOR
+   - Access: Read-only across all entities
+   - Use Case: SOX testing, compliance reviews
+
+4. DATA STEWARD
+   - Access: Classification review and override
+   - Use Case: Training data curation, model feedback
+
+5. EXECUTIVE DASHBOARD USER
+   - Access: Aggregated KPIs only, no drill-down
+   - Use Case: CEO, Board reporting
+
+ENHANCED CONTROLS:
+
+  • Time-based access restrictions
+  • IP-based geolocation controls
+  • Multi-factor authentication integration
+  • Session timeout and concurrent login limits
+  • Detailed audit logging with user attribution
+
+================================================================================
+7. TESTING & VALIDATION
+================================================================================
+
+VERIFICATION STEPS:
+
+1. Login as Maria (Controller)
+   - Navigate to Dashboard
+   - Verify: "10 Total Entries" displayed
+   - Verify: "Full Access" badge visible
+   - Navigate to Journal Review
+   - Verify: All 10 entries visible
+   - Verify: Multiple ERP sources (SAP_ECC, JDE, ISERIES)
+
+2. Logout and Login as Daniel (Plant Analyst)
+   - Navigate to Dashboard
+   - Verify: "4 Total Entries" displayed
+   - Verify: "Filtered View" badge visible
+   - Navigate to Journal Review
+   - Verify: Only 4 entries visible
+   - Verify: Only JDE source visible
+   - Verify: Only RY01 company codes
+
+3. Attempt Cross-Entity Access (Daniel)
+   - Manually navigate to /drill-down/JE001
+   - Verify: "Entry not found or access denied" message
+   - Verify: Redirect to Journal Review
+
+================================================================================
+END OF DOCUMENT
+================================================================================
+
