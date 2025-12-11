@@ -5,39 +5,46 @@
 {% block login_content %}
 <div class="login-page">
     <aside class="login-sidebar">
-        <div class="login-brand">
-            <div class="login-brand-logo">FI</div>
-            <h1>TMHNA Financial Intelligence</h1>
-            <p>Unified data management and AI-powered analytics for Toyota Material Handling North America.</p>
+        <div class="login-logo">
+            <div class="login-logo-icon">FI</div>
+            <div class="login-logo-text">
+                <div class="login-logo-title">TMHNA</div>
+                <div class="login-logo-subtitle">Financial Intelligence</div>
+            </div>
+        </div>
+        
+        <div class="login-hero">
+            <h1>Unified Financial Intelligence Platform</h1>
+            <p>AI-powered data management and analytics across Toyota Material Handling North America's ERP landscape.</p>
         </div>
         
         <div class="login-features">
             <div class="login-feature">
                 <div class="login-feature-icon">📊</div>
                 <div class="login-feature-text">
-                    <div class="login-feature-title">Multi-ERP Integration</div>
-                    <div class="login-feature-desc">Unified view across SAP, JDE, and iSeries systems</div>
+                    <h4>Multi-ERP Integration</h4>
+                    <p>Unified view across SAP, JDE, and iSeries</p>
                 </div>
             </div>
             <div class="login-feature">
                 <div class="login-feature-icon">🤖</div>
                 <div class="login-feature-text">
-                    <div class="login-feature-title">AI-Powered Classification</div>
-                    <div class="login-feature-desc">Automated GL account mapping with 89% precision</div>
+                    <h4>AI Classification</h4>
+                    <p>ML-powered GL mapping with 89% precision</p>
                 </div>
             </div>
             <div class="login-feature">
                 <div class="login-feature-icon">⚠️</div>
                 <div class="login-feature-text">
-                    <div class="login-feature-title">Anomaly Detection</div>
-                    <div class="login-feature-desc">Real-time flagging of high-risk transactions</div>
+                    <h4>Anomaly Detection</h4>
+                    <p>Isolation Forest flags high-risk transactions</p>
                 </div>
             </div>
             <div class="login-feature">
                 <div class="login-feature-icon">🔒</div>
                 <div class="login-feature-text">
-                    <div class="login-feature-title">Role-Based Access</div>
-                    <div class="login-feature-desc">Secure, persona-specific data views</div>
+                    <h4>Role-Based Access</h4>
+                    <p>Secure, persona-specific data filtering</p>
                 </div>
             </div>
         </div>
@@ -52,7 +59,9 @@
             
             <div class="persona-grid">
                 {% for key, persona in personas.items() %}
-                <div class="persona-card">
+                <form method="POST" action="{{ url_for('login') }}" class="persona-card">
+                    <input type="hidden" name="persona" value="{{ key }}">
+                    
                     <div class="persona-header">
                         <div class="persona-avatar">
                             {% if persona.role == 'Controller' %}👩‍💼{% else %}👨‍💻{% endif %}
@@ -65,7 +74,7 @@
                     </div>
                     
                     <div class="persona-responsibilities">
-                        <div class="persona-responsibilities-label">Key Responsibilities</div>
+                        <h4>Key Responsibilities</h4>
                         <ul>
                             {% for responsibility in persona.responsibilities %}
                             <li>{{ responsibility }}</li>
@@ -73,22 +82,11 @@
                         </ul>
                     </div>
                     
-                    <form method="POST" action="{{ url_for('login') }}">
-                        <input type="hidden" name="persona" value="{{ key }}">
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            Continue as {{ persona.name.split()[0] }}
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </button>
-                    </form>
-                </div>
+                    <button type="submit" class="persona-submit">
+                        Continue as {{ persona.name.split()[0] }} →
+                    </button>
+                </form>
                 {% endfor %}
-            </div>
-            
-            <div class="login-footer">
-                <p>This is a demonstration portal showcasing TMHNA's unified financial intelligence architecture.</p>
             </div>
         </div>
     </main>

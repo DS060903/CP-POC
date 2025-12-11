@@ -1,0 +1,84 @@
+================================================================================
+                         USER PERSONA: MARIA THOMPSON
+================================================================================
+
+NAME
+────────────────────────────────────────────────────────────────────────────────
+Maria Thompson – Corporate Controller, TMHNA
+
+
+QUOTE
+────────────────────────────────────────────────────────────────────────────────
+"I need one trusted view of TMH, Raymond, and THD so we stop spending close 
+week stitching SAP, JDE, and spreadsheets together instead of explaining 
+the numbers."
+
+
+PERSONAL
+────────────────────────────────────────────────────────────────────────────────
+AGE:        42
+WORK:       Corporate Controller, TMHNA
+GENDER:     Female
+STATUS:     Married
+LOCATION:   Columbus, IN (HQ)
+
+
+BIO
+────────────────────────────────────────────────────────────────────────────────
+Maria leads TMHNA's consolidated financial reporting across Toyota Material 
+Handling, The Raymond Corporation, and THD. She manages a 12-person team 
+responsible for close, intercompany eliminations, and TECO reporting, and 
+constantly wrestles with fragmented ERPs and divergent charts of accounts.
+
+
+GOALS AND NEEDS
+────────────────────────────────────────────────────────────────────────────────
+• Unified, drill-through view across SAP ECC, JDE, and iSeries without 
+  manual Excel consolidation.
+
+• Cut close from ~10 days to a 3–5 day soft close using automation and 
+  standardized GL mappings.
+
+• Proactively flag anomalies and high-risk transactions before sign-off, 
+  with AI-powered classification confidence scores.
+
+• Maintain strong SOX and TECO compliance with full data lineage and 
+  role-based access controls.
+
+
+FRUSTRATIONS
+────────────────────────────────────────────────────────────────────────────────
+• Different GL and cost center structures by brand force heavy manual 
+  mapping each month.
+
+• Raymond's JDE and security constraints make it feel like "another company" 
+  under the same P&L.
+
+• Data quality issues at plants surface late as unexplained variances, 
+  and Corporate gets blamed.
+
+• Too much time on reconciliation; not enough on variance analysis and 
+  guidance for the CFO.
+
+
+PERSONALITY
+────────────────────────────────────────────────────────────────────────────────
+Analytical • Detail-oriented • Process-driven • Risk-aware • Strategic • 
+Collaborative leader
+
+
+TOOLS
+────────────────────────────────────────────────────────────────────────────────
+Current:    SAP ECC, JD Edwards, iSeries, Excel (manual consolidation), 
+            Power BI, Teams.
+
+Target:     TMHNA Financial Intelligence Portal with unified Chart of Accounts,
+            ML-powered classification (Random Forest), Isolation Forest anomaly 
+            detection, role-based dashboards, and drill-down to source ERP records.
+
+
+================================================================================
+                     ACCESS LEVEL: FULL ACCESS (All Entities)
+              Portal View: All SAP_ECC, JDE, and iSeries transactions
+================================================================================
+

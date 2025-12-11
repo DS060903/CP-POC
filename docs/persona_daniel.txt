@@ -1,0 +1,88 @@
+================================================================================
+                          USER PERSONA: DANIEL REYES
+================================================================================
+
+NAME
+────────────────────────────────────────────────────────────────────────────────
+Daniel Reyes – Plant Financial Analyst, Raymond (Greene)
+
+
+QUOTE
+────────────────────────────────────────────────────────────────────────────────
+"I know Greene's operations cold; if I can see clean, timely data, I can 
+usually trace any odd posting back to a line, shift, or vendor long before 
+Corporate calls."
+
+
+PERSONAL
+────────────────────────────────────────────────────────────────────────────────
+AGE:        29
+WORK:       Plant Financial Analyst – Raymond Greene facility
+GENDER:     Male
+STATUS:     Single
+LOCATION:   Greene, NY
+
+
+BIO
+────────────────────────────────────────────────────────────────────────────────
+Daniel supports the Raymond manufacturing plant in Greene, working between 
+JD Edwards on iSeries and SAP ECC for commercial flows. He reports to the 
+Plant Controller and is the first line of defense for data quality, translating 
+shop-floor activity into accurate cost and margin reporting that eventually 
+rolls up to TMHNA Corporate Finance.
+
+
+GOALS AND NEEDS
+────────────────────────────────────────────────────────────────────────────────
+• Spot mis-coded or unusual plant transactions early, before they become 
+  intercompany or consolidation issues for Maria's team.
+
+• Understand how local JDE codes map into TMHNA's unified Chart of Accounts 
+  and cost-center model so he can "code it right the first time."
+
+• Spend less time exporting CSVs and reconciling spreadsheets, more time on 
+  variance analysis and explaining drivers to plant leadership.
+
+• Build skills in analytics and AI-assisted tools to grow into an FP&A or 
+  corporate finance role.
+
+
+FRUSTRATIONS
+────────────────────────────────────────────────────────────────────────────────
+• JDE and legacy reports are clunky; most analysis requires multiple exports 
+  and manual VLOOKUPs to tie into corporate templates.
+
+• Little transparency into TMHNA-level mappings and rules; he often learns 
+  about "wrong" classifications only when Corporate sends issues back late 
+  in the close.
+
+• Limited, filtered visibility to other plants' data makes it hard to 
+  benchmark Greene's performance or validate if a variance pattern is local 
+  or enterprise-wide.
+
+• Feels accountable for data quality but lacks automated anomaly flags and 
+  clear feedback loops from classification tools.
+
+
+PERSONALITY
+────────────────────────────────────────────────────────────────────────────────
+Curious • Tech-savvy • Problem solver • Proactive • Detail-oriented • 
+Eager learner
+
+
+TOOLS
+────────────────────────────────────────────────────────────────────────────────
+Current:    JD Edwards on iSeries, SAP ECC extracts, Excel, Crystal Reports, 
+            SharePoint; beginning to use Power BI.
+
+Target:     TMHNA Financial Intelligence Portal with filtered Raymond-only views,
+            AI-driven anomaly flags (Isolation Forest), ML classification 
+            suggestions with confidence scores, and drill-down to source JDE 
+            records with mapping explanations.
+
+
+================================================================================
+                  ACCESS LEVEL: FILTERED ACCESS (Raymond Only)
+                 Portal View: RY01, RY02 entities – JDE transactions
+           No visibility into TMH (TN01, TN02) or other brand ledgers
+================================================================================
