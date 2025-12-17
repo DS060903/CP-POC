@@ -1,0 +1,311 @@
+================================================================================
+TMHNA FINANCIAL INTELLIGENCE PORTAL
+PRODUCT REQUIREMENTS DOCUMENT (PRD)
+================================================================================
+
+Version: 1.0
+Date: December 2024
+Status: Approved for PoC
+
+================================================================================
+1. EXECUTIVE SUMMARY
+================================================================================
+
+Build a web application that unifies financial data from SAP, JDE, and iSeries 
+into a single dashboard with AI-powered GL classification and anomaly detection. 
+The portal enables role-based access for Corporate Controllers (full view) and 
+Plant Analysts (filtered view), simulating a Power BI environment.
+
+================================================================================
+2. PROBLEM STATEMENT
+================================================================================
+
+TMHNA operates three ERPs with incompatible GL structures, causing:
+  - 10+ day close cycles due to manual Excel consolidation
+  - Inconsistent account mappings across brands
+  - Late-stage anomaly discovery impacting financial accuracy
+  - No unified view for cross-brand analytics
+
+================================================================================
+3. GOALS
+================================================================================
+
+PRIMARY:
+  1. Unify financial data from 3 ERPs into one normalized schema
+  2. Automate GL classification with ML (target: 85%+ confidence)
+  3. Flag high-risk transactions before close
+  4. Enforce role-based data access
+
+SUCCESS CRITERIA:
+  - Prototype demonstrates end-to-end flow in 60 seconds
+  - Two personas with distinct data views
+  - Drill-down from dashboard to source ERP record
+
+================================================================================
+4. SCOPE
+================================================================================
+
+IN-SCOPE (PoC):
+  - Mock data ingestion (CSV) from SAP, JDE, iSeries
+  - Unified Chart of Accounts mapping
+  - Random Forest classification model
+  - Isolation Forest anomaly detection
+  - Flask web app with Plotly dashboards
+  - Two personas: Controller (full), Analyst (filtered)
+  - Drill-down with AI explanation
+
+OUT-OF-SCOPE:
+  - Live ERP connections
+  - User authentication (SSO/MFA)
+  - Model retraining from UI
+  - Export/reporting features
+  - Production security controls
+
+================================================================================
+5. PERSONAS
+================================================================================
+
++-------------------+-------------------+-----------------------------------+
+| PERSONA           | ACCESS            | KEY ACTIONS                       |
++-------------------+-------------------+-----------------------------------+
+| Maria Thompson    | Full Access       | View consolidated KPIs            |
+| Corporate         | All entities      | Investigate cross-brand anomalies |
+| Controller        | (TN01, TN02,      | Approve/override classifications  |
+|                   | RY01, RY02)       | Drill-down to any ERP source      |
++-------------------+-------------------+-----------------------------------+
+| Daniel Reyes      | Filtered Access   | View Raymond-only metrics         |
+| Plant Analyst     | Raymond only      | Investigate plant anomalies       |
+| (Greene, NY)      | (RY01, RY02)      | Validate local GL mappings        |
++-------------------+-------------------+-----------------------------------+
+
+================================================================================
+6. FUNCTIONAL REQUIREMENTS
+================================================================================
+
+FR-1: DATA INGESTION
+  - Load journal entries from 3 CSV sources
+  - Normalize to unified schema (entry_id, source_erp, amount, description)
+  - Map local GL codes to TMHNA Chart of Accounts
+
+FR-2: AI CLASSIFICATION
+  - Train Random Forest on labeled training data
+  - Predict TMHNA GL account for each entry
+  - Return confidence score (0-100%)
+  - Flag entries below 70% for human review
+
+FR-3: ANOMALY DETECTION
+  - Train Isolation Forest on transaction amounts
+  - Flag statistical outliers
+  - Flag high-value transactions (>$20K)
+  - Provide human-readable anomaly reason
+
+FR-4: DASHBOARD
+  - Display KPIs: total entries, anomaly count, avg confidence
+  - Show charts: account distribution, confidence histogram
+  - List high-risk anomalies with drill-down links
+
+FR-5: JOURNAL REVIEW
+  - List all entries with filters (ERP source, confidence, anomalies)
+  - Show classification status and confidence
+  - Link to drill-down page
+
+FR-6: DRILL-DOWN
+  - Display raw ERP record details
+  - Show AI classification with confidence
+  - Explain mapping logic
+  - Provide feedback submission form
+
+FR-7: ROLE-BASED ACCESS
+  - Filter data by persona on login
+  - Controller sees all entities
+  - Analyst sees only Raymond (RY*) entities
+  - Deny access to unauthorized drill-downs
+
+================================================================================
+7. NON-FUNCTIONAL REQUIREMENTS
+================================================================================
+
+NFR-1: PERFORMANCE
+  - Page load < 2 seconds
+  - Model inference < 100ms per entry
+
+NFR-2: USABILITY
+  - Power BI-inspired design
+  - No emojis; clean enterprise aesthetic
+  - Responsive layout (desktop primary)
+
+NFR-3: MAINTAINABILITY
+  - Python 3.10+ compatibility
+  - Modular architecture (data_loader, classifier, anomaly_detector)
+  - Models auto-train if not cached
+
+NFR-4: RELIABILITY
+  - Graceful handling of missing data
+  - Default to manual classification on model failure
+
+================================================================================
+8. TECHNICAL ARCHITECTURE
+================================================================================
+
+STACK:
+  - Backend: Python 3.10+, Flask 3.x
+  - Frontend: Jinja2, Plotly.js, CSS
+  - ML: scikit-learn (RandomForest, IsolationForest)
+  - Data: Pandas, CSV storage
+
+COMPONENT DIAGRAM:
+
+  ┌─────────────────────────────────────────────────────────────┐
+  │                      FLASK APPLICATION                       │
+  ├─────────────────────────────────────────────────────────────┤
+  │  Routes: /, /login, /dashboard, /journal-review, /drill-down│
+  └───────────────────────────┬─────────────────────────────────┘
+                              │
+                              ▼
+  ┌─────────────────────────────────────────────────────────────┐
+  │               FINANCIAL INTELLIGENCE ENGINE                  │
+  │  - DataLoader (CSV ingestion)                                │
+  │  - Classifier (Random Forest)                                │
+  │  - AnomalyDetector (Isolation Forest)                        │
+  │  - NLPProcessor (keyword extraction)                         │
+  └───────────────────────────┬─────────────────────────────────┘
+                              │
+                              ▼
+  ┌──────────────┬──────────────┬──────────────┬────────────────┐
+  │ journal_     │ chart_of_    │ training_    │ models/        │
+  │ entries.csv  │ accounts.csv │ data.csv     │ *.pkl          │
+  └──────────────┴──────────────┴──────────────┴────────────────┘
+
+FILE STRUCTURE:
+
+  tmhna_financial_poc/
+  ├── run.py                 # Entry point
+  ├── requirements.txt       # Dependencies
+  ├── src/
+  │   ├── app.py             # Flask routes
+  │   ├── backend.py         # Engine orchestration
+  │   ├── classifier.py      # Random Forest model
+  │   ├── anomaly_detector.py# Isolation Forest model
+  │   ├── data_loader.py     # CSV ingestion
+  │   └── nlp_processor.py   # Text processing
+  ├── data/                  # CSV datasets
+  ├── models/                # Trained model pickles
+  ├── templates/             # Jinja2 HTML
+  ├── static/css/            # Stylesheets
+  └── docs/                  # Documentation
+
+================================================================================
+9. DATA MODELS
+================================================================================
+
+JOURNAL ENTRY:
+  {
+    entry_id: str,
+    source_erp: "SAP_ECC" | "JDE" | "ISERIES",
+    source_company_code: str,
+    local_account_code: str,
+    description: str,
+    vendor_name: str,
+    amount_local_currency: float,
+    posting_date: date
+  }
+
+CLASSIFIED ENTRY (extends Journal Entry):
+  {
+    ...journal_entry,
+    tmhna_account_code: str,
+    tmhna_account_name: str,
+    confidence: float,
+    is_anomaly: bool,
+    anomaly_reason: str,
+    anomaly_severity: "High" | "Low" | null,
+    needs_review: bool
+  }
+
+CHART OF ACCOUNTS:
+  {
+    tmhna_account_code: str,
+    tmhna_account_name: str,
+    account_category: str,
+    source_account_tmh_sap: str,
+    source_account_raymond_jde: str
+  }
+
+================================================================================
+10. USER FLOWS
+================================================================================
+
+FLOW 1: LOGIN
+  1. User visits /
+  2. Selects persona (Maria or Daniel)
+  3. System sets session with role and filters
+  4. Redirect to /dashboard
+
+FLOW 2: DASHBOARD REVIEW
+  1. User views KPIs (filtered by role)
+  2. User scans charts for patterns
+  3. User clicks anomaly in High-Risk table
+  4. System opens drill-down
+
+FLOW 3: DRILL-DOWN INVESTIGATION
+  1. User views raw ERP data
+  2. User reviews AI classification and confidence
+  3. User reads mapping explanation
+  4. User submits feedback (optional)
+  5. User returns to dashboard or journal review
+
+FLOW 4: JOURNAL FILTERING
+  1. User opens /journal-review
+  2. User applies filters (ERP, confidence, anomalies)
+  3. User clicks entry to drill-down
+  4. User validates or overrides classification
+
+================================================================================
+11. DEPENDENCIES
+================================================================================
+
+PYTHON PACKAGES:
+  - flask>=3.0.0
+  - pandas>=2.0.0
+  - scikit-learn>=1.3.0
+  - numpy>=1.24.0
+  - python-dateutil>=2.8.0
+
+EXTERNAL:
+  - Plotly CDN (charts)
+  - No database (CSV-only for PoC)
+
+================================================================================
+12. RISKS
+================================================================================
+
++------------------+------------------------+------------------------------+
+| RISK             | IMPACT                 | MITIGATION                   |
++------------------+------------------------+------------------------------+
+| Low training data| Poor classification    | Use mock data; document as   |
+|                  | accuracy               | demo limitation              |
++------------------+------------------------+------------------------------+
+| Model cold start | Slow first page load   | Auto-train on run.py start   |
++------------------+------------------------+------------------------------+
+| Plotly CDN fails | Charts don't render    | Add offline fallback (future)|
++------------------+------------------------+------------------------------+
+
+================================================================================
+13. FUTURE ROADMAP
+================================================================================
+
+PHASE 2 (3-6 months):
+  - Live SAP/JDE connectors
+  - User feedback loop for model retraining
+  - Additional personas (Regional Controller, Auditor)
+
+PHASE 3 (6-12 months):
+  - Predictive anomaly detection
+  - Natural language query ("Show consulting > $25K")
+  - Snowflake/Databricks integration
+  - SSO and production security
+
+================================================================================
+END OF DOCUMENT
+================================================================================
+
