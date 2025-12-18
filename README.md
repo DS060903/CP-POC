@@ -12,6 +12,28 @@ A production-ready Flask web application demonstrating TMHNA's unified financial
 
 ## Quick Start
 
+### 1. Create a Virtual Environment
+
+**Windows:**
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+venv\Scripts\activate
+```
+
+**macOS/Linux:**
+```bash
+# Create virtual environment
+python3 -m venv venv
+
+# Activate virtual environment
+source venv/bin/activate
+```
+
+### 2. Install Dependencies & Run
+
 ```bash
 # Install dependencies
 pip install -r requirements.txt
@@ -22,6 +44,8 @@ python run.py
 # Open in browser
 http://localhost:5000
 ```
+
+> **Note:** To deactivate the virtual environment when done, simply run `deactivate`
 
 ## Project Structure
 
