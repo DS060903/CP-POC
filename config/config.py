@@ -9,13 +9,13 @@ from pathlib import Path
 class Config:
     """Base configuration with default settings."""
     
-    # Base directory of the application
-    BASE_DIR = Path(__file__).parent.parent
+    # Base directory of the application (use absolute path for deployment)
+    BASE_DIR = Path(__file__).parent.parent.absolute()
     
     # Secret key for session management
     SECRET_KEY = os.environ.get('SECRET_KEY', 'tmhna-financial-dev-key-change-in-production')
     
-    # Data and model directories
+    # Data and model directories (absolute paths)
     DATA_DIR = BASE_DIR / 'data'
     MODELS_DIR = BASE_DIR / 'models'
     

@@ -7,17 +7,21 @@ from functools import wraps
 import pandas as pd
 from pathlib import Path
 import sys
+import os
+
+# Get the project root directory (parent of src/)
+PROJECT_ROOT = Path(__file__).parent.parent.absolute()
 
 # Add parent directory to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(PROJECT_ROOT))
 from config.config import DevelopmentConfig
 from src.backend import FinancialIntelligenceEngine
 
-# Initialize Flask app
+# Initialize Flask app with absolute paths
 app = Flask(
     __name__,
-    template_folder='../templates',
-    static_folder='../static'
+    template_folder=str(PROJECT_ROOT / 'templates'),
+    static_folder=str(PROJECT_ROOT / 'static')
 )
 app.config.from_object(DevelopmentConfig)
 
